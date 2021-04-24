@@ -3,9 +3,16 @@ import {TypeOrmModule} from '@nestjs/typeorm';
 import {Connection} from 'typeorm';
 import {ConfigModule} from '@nestjs/config';
 import {AppGateway} from './app.gateway';
-import {AppController} from "./app.controller";
 import {UsersModule} from "./users/users.module";
-import {BotModule} from './bot/bot.module';
+import {AppController} from "./app/controller/app.controller";
+import {UserRepository} from "./users/core/repository/user.repository";
+import {User} from "./users/core/entity/user.entity";
+import {Role} from "./users/core/entity/role.entity";
+import {SocialLocal} from "./users/core/entity/social-local.entity";
+import {RoleRepository} from "./users/core/repository/role.repository";
+import {SocialLocalRepository} from "./users/core/repository/social-local.repository";
+import { BotModule } from './bot/bot.module';
+import {DiscordModule} from "./discord/discord.module";
 
 @Module({
     imports: [
@@ -18,7 +25,7 @@ import {BotModule} from './bot/bot.module';
             password: process.env.DB_PASSWORD,
             database: process.env.DB_DATABASE_NAME,
             entities: [
-                "dist/entity/**/*.js"
+                "dist/**/entity/**/*.js"
             ],
             migrations: [
                 "dist/migration/**/*.js"
@@ -30,8 +37,15 @@ import {BotModule} from './bot/bot.module';
             logging: false,
             autoLoadEntities: true
         }),
+
+        TypeOrmModule.forFeature([
+            User, UserRepository,
+            Role, RoleRepository,
+            SocialLocal, SocialLocalRepository
+        ]),
+        DiscordModule,
         UsersModule,
-        BotModule
+        BotModule,
     ],
     controllers: [AppController],
     providers: [AppGateway],

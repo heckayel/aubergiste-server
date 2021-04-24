@@ -1,8 +1,8 @@
 import {Body, Controller, Delete, Get, Param, Put, Request} from '@nestjs/common';
 import {ApiBearerAuth, ApiTags} from "@nestjs/swagger";
 import {InjectRepository} from "@nestjs/typeorm";
-import {AnswerRepository} from "../../database/repository/answer.repository";
-import {UpdateAnswerDto} from "../../database/dto/update-answer.dto";
+import {AnswerRepository} from "../core/repository/answer.repository";
+import {UpdateAnswerDto} from "../core/dto/update-answer.dto";
 
 @ApiBearerAuth()
 @ApiTags('Answers')

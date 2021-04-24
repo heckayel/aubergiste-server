@@ -1,44 +1,37 @@
 import {Module} from '@nestjs/common';
 import {BotController} from "./controller/bot.controller";
-import {TypeOrmModule} from "@nestjs/typeorm";
-import {DiscordServer} from "../database/entity/discordServer.entity";
-import {DiscordServerRepository} from "../database/repository/discordServer.repository";
-import {DiscordChannel} from "../database/entity/discordChannel.entity";
-import {DiscordChannelRepository} from "../database/repository/discordChannel.repository";
-import {Command} from "../database/entity/command.entity";
-import {CommandRepository} from "../database/repository/command.repository";
-import {Answer} from "../database/entity/answer.entity";
-import {AnswerRepository} from "../database/repository/answer.repository";
 import {AnswerController} from "./controller/answer.controller";
 import {CommandController} from "./controller/command.controller";
-import {DiscordChannelController} from "./controller/discord-channel.controller";
-import {DiscordServerController} from "./controller/discord-server.controller";
+import {TypeOrmModule} from "@nestjs/typeorm";
+import {Command} from "./core/entity/command.entity";
+import {Answer} from "./core/entity/answer.entity";
+import {AnswerRepository} from "./core/repository/answer.repository";
+import {CommandRepository} from "./core/repository/command.repository";
 import {DiscordService} from "./service/discord.service";
-import {UsersModule} from "../users/users.module";
-import {AnswerListener} from "./listeners/answer.listener";
+import {EmbedService} from "./service/embed.service";
+import {RouteListener} from "./listeners/route.listener";
+import {AnswerControllerBot} from "./controller-bot/answer.controller-bot";
+import {DiscordGuildRepository} from "../discord/core/repository/discord-guild.repository";
+import {DiscordGuild} from "../discord/core/entity/discord-guild.entity";
 
 @Module({
     controllers: [
         BotController,
         AnswerController,
-        CommandController,
-        DiscordChannelController,
-        DiscordServerController
+        CommandController
     ],
     imports: [
         TypeOrmModule.forFeature([
-            DiscordServer, DiscordServerRepository,
-            DiscordChannel, DiscordChannelRepository,
             Command, CommandRepository,
-            Answer, AnswerRepository
-        ]),
-        UsersModule
+            Answer, AnswerRepository,
+            DiscordGuild, DiscordGuildRepository
+        ])
     ],
     providers: [
         DiscordService,
-        AnswerListener
+        EmbedService,
+        AnswerControllerBot,
+        RouteListener
     ]
 })
-export class BotModule {
-
-}
+export class BotModule {}

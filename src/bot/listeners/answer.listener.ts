@@ -1,8 +1,7 @@
 import {Injectable} from "@nestjs/common";
 import {DiscordService} from "../service/discord.service";
 import {InjectRepository} from "@nestjs/typeorm";
-import {UserRepository} from "../../database/repository/user.repository";
-import {CommandRepository} from "../../database/repository/command.repository";
+import {CommandRepository} from "../core/repository/command.repository";
 
 @Injectable()
 export class AnswerListener {

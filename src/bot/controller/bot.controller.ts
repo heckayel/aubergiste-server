@@ -1,10 +1,10 @@
 import {Body, Controller, Post, UseGuards} from '@nestjs/common';
 import {ApiBearerAuth, ApiTags} from "@nestjs/swagger";
-import {DirectMessageBotDto} from "../../database/dto/direct-message-bot-dto.dto";
 import {DiscordService} from "../service/discord.service";
 import {JwtAuthGuard} from "../../users/auth/jwt-auth.guard";
-import {Roles} from "../../auth/roles.decorator";
-import {RolesEnum} from "../../database/enums/roles.enum";
+import {Roles} from "../../users/auth/roles.decorator";
+import {DirectMessageBotDto} from "../core/dto/direct-message-bot-dto.dto";
+import {RolesEnum} from "../../users/core/enum/roles.enum";
 
 @ApiBearerAuth()
 @ApiTags('Bots')

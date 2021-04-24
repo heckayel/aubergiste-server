@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
-import {UsersService} from "../../users/users.service";
 import {Client, Message, TextChannel} from "discord.js";
+import {UsersService} from "../../users/local/users.service";
 
 @Injectable()
 export class DiscordService {
@@ -8,7 +8,6 @@ export class DiscordService {
     clientDiscord: Client;
 
     constructor(
-        private readonly usersService: UsersService
     ) {
 
         this.clientDiscord = new Client();
